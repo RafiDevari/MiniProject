@@ -10,7 +10,7 @@
     <div class="text-center">
         <h1 class="text-4xl font-bold text-gray-800 mb-4">Cek Kandungan Gizi</h1>
         <p class="text-gray-600 mb-6">Ambil gambar makanan Anda dan dapatkan informasi kandungan gizinya.</p>
-        <button onclick="openCamera()" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">Buka Kamera</button>
+        <button id="openCameraButton" onclick="openCamera()" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">Buka Kamera</button>
     </div>
 
     <div class="mt-6" id="cameraContainer" style="display: none;">
@@ -27,10 +27,13 @@
         </div>
     </div>
 
+    <div id="jsonOutput" class="mt-6 p-4 bg-white border rounded-lg shadow-md w-3/4 text-gray-800" style="display: none;"></div>
+
     <script>
         function openCamera() {
             document.getElementById('cameraContainer').style.display = 'block';
             document.getElementById('previewContainer').style.display = 'none';
+            document.getElementById('openCameraButton').style.display = 'none';
             const video = document.getElementById('camera');
             navigator.mediaDevices.getUserMedia({ video: true })
                 .then(stream => { video.srcObject = stream; })
@@ -53,22 +56,45 @@
 
         function retakeImage() {
             document.getElementById('previewContainer').style.display = 'none';
+            document.getElementById('jsonOutput').style.display = 'none';
             openCamera();
         }
 
         function uploadImage() {
             const canvas = document.getElementById('canvas');
             canvas.toBlob(blob => {
-                const formData = new FormData();
-                formData.append("image", blob, "food.jpg");
-                
-                fetch("https://api.example.com/upload", {
-                    method: "POST",
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => console.log("Success:", data))
-                .catch(error => console.error("Error:", error));
+                const reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = function() {
+                    const base64data = reader.result.split(',')[1];
+                    fetch("", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            "contents": [{
+                                "parts": [
+                                    {"text": "buatlah penjelasan dan saran berdasarkan ini"},
+                                    {"inline_data": {
+                                        "mime_type": "image/jpeg",
+                                        "data": base64data
+                                    }}
+                                ]
+                            }]
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const textResponse = data.candidates[0].content.parts[0].text;
+                        document.getElementById('jsonOutput').style.display = 'block';
+                        document.getElementById('jsonOutput').innerText = textResponse;
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        document.getElementById('jsonOutput').innerText = "Terjadi kesalahan. Coba lagi.";
+                    });
+                };
             }, "image/jpeg");
         }
     </script>
