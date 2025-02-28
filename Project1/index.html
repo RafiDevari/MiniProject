@@ -1,11 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cek Kandungan Gizi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+    <div class="text-center">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Cek Kandungan Gizi</h1>
+        <p class="text-gray-600 mb-6">Ambil gambar makanan Anda dan dapatkan informasi kandungan gizinya.</p>
+        <button onclick="openCamera()" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">Buka Kamera</button>
+    </div>
+
+    <div class="mt-6" id="cameraContainer" style="display: none;">
+        <video id="camera" autoplay class="border rounded-lg shadow-md"></video>
+        <button onclick="captureImage()" class="mt-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition">Ambil Gambar</button>
+    </div>
+
+    <canvas id="canvas" style="display: none;"></canvas>
+    <div id="previewContainer" class="mt-6 text-center" style="display: none;">
+        <img id="previewImage" class="border rounded-lg shadow-md max-w-xs" />
+        <div class="mt-4">
+            <button onclick="retakeImage()" class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-600 transition">Ambil Ulang</button>
+            <button onclick="uploadImage()" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition">Kirim Gambar</button>
+        </div>
+    </div>
+
+    <script>
+        function openCamera() {
+            document.getElementById('cameraContainer').style.display = 'block';
+            document.getElementById('previewContainer').style.display = 'none';
+            const video = document.getElementById('camera');
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => { video.srcObject = stream; })
+                .catch(error => console.error("Error accessing camera: ", error));
+        }
+
+        function captureImage() {
+            const video = document.getElementById('camera');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            const imageUrl = canvas.toDataURL("image/jpeg");
+            document.getElementById('previewImage').src = imageUrl;
+            document.getElementById('previewContainer').style.display = 'block';
+            document.getElementById('cameraContainer').style.display = 'none';
+        }
+
+        function retakeImage() {
+            document.getElementById('previewContainer').style.display = 'none';
+            openCamera();
+        }
+
+        function uploadImage() {
+            const canvas = document.getElementById('canvas');
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append("image", blob, "food.jpg");
+                
+                fetch("https://api.example.com/upload", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => console.log("Success:", data))
+                .catch(error => console.error("Error:", error));
+            }, "image/jpeg");
+        }
+    </script>
 </body>
 </html>
