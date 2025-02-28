@@ -60,52 +60,37 @@
             openCamera();
         }
 
-        function uploadImage() {
-            const canvas = document.getElementById('canvas');
-            canvas.toBlob(blob => {
-                const reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = function() {
-                    const base64data = reader.result.split(',')[1];
-                    fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=", {
+            function uploadImage() {
+                const canvas = document.getElementById('canvas');
+                canvas.toBlob(blob => {
+                    const formData = new FormData();
+                    formData.append("image", blob, "image.jpg");
+                    
+                    fetch("https://flask-api-vercel-test-eight.vercel.app/upload", {  
                         method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            "contents": [{
-                                "parts": [
-                                    { "text": "Berdasarkan gambar ini, berikan informasi kandungan gizinya dalam format JSON sebagai berikut,Berikan saran dalam saat makan makanan kemasan ini seperti seberapa sehat makanan ini dan lain lain.Jika foto ini tidak mengandung kandungan nutrisi,buat nilai null  jika ada yang 0mg buat 0 mg tetap.BERIKAN HANYA JSONNYA:\n{\n\"kalori\": \" \",\n\"lemak_total\": \" \",\n\"lemak_jenuh\": \" \",\n\"kolesterol\": \" \",\n\"protein\": \" \",\n\"karbohidrat\": \" \",\n\"gula\": \" \",\n\"garam\": \" \",\n\"saran\": \" \"}" },
-                                    { "inline_data": { "mime_type": "image/jpeg", "data": base64data } }
-                                ]
-                            }]
-                        })
+                        body: formData
                     })
                     .then(response => response.json())
                     .then(data => {
                         try {
-                            let textResponse = data.candidates[0].content.parts[0].text;
-                            textResponse = textResponse.replace(/```json/g, "").replace(/```/g, "").trim();
-                            const parsedData = JSON.parse(textResponse);
-
                             // Menampilkan hasil dengan desain
                             const output = `
                                 <div class="bg-white shadow-md rounded-lg p-4">
                                     <h2 class="text-xl font-bold mb-2">Hasil Kandungan Gizi</h2>
-                                    <p><strong>Kalori:</strong> ${parsedData.kalori}</p>
-                                    <p><strong>Lemak Total:</strong> ${parsedData.lemak_total}</p>
-                                    <p><strong>Lemak Jenuh:</strong> ${parsedData.lemak_jenuh}</p>
-                                    <p><strong>Kolesterol:</strong> ${parsedData.kolesterol}</p>
-                                    <p><strong>Protein:</strong> ${parsedData.protein}</p>
-                                    <p><strong>Karbohidrat:</strong> ${parsedData.karbohidrat}</p>
-                                    <p><strong>Gula:</strong> ${parsedData.gula}</p>
-                                    <p><strong>Garam:</strong> ${parsedData.garam}</p>
-                                    <div class="mt-4 p-3 rounded-lg ${parsedData.saran ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'}">
-                                        <strong>Saran:</strong> ${parsedData.saran ? parsedData.saran : "Masukkan gambar yang benar"}
+                                    <p><strong>Kalori:</strong> ${data.kalori}</p>
+                                    <p><strong>Lemak Total:</strong> ${data.lemak_total}</p>
+                                    <p><strong>Lemak Jenuh:</strong> ${data.lemak_jenuh}</p>
+                                    <p><strong>Kolesterol:</strong> ${data.kolesterol}</p>
+                                    <p><strong>Protein:</strong> ${data.protein}</p>
+                                    <p><strong>Karbohidrat:</strong> ${data.karbohidrat}</p>
+                                    <p><strong>Gula:</strong> ${data.gula}</p>
+                                    <p><strong>Garam:</strong> ${data.garam}</p>
+                                    <div class="mt-4 p-3 rounded-lg ${data.saran ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'}">
+                                        <strong>Saran:</strong> ${data.saran ? data.saran : "Masukkan gambar yang benar"}
                                     </div>
                                 </div>
                             `;
-
+                            
                             document.getElementById('jsonOutput').style.display = 'block';
                             document.getElementById('jsonOutput').innerHTML = output;
                         } catch (error) {
@@ -119,9 +104,9 @@
                         document.getElementById('jsonOutput').style.display = 'block';
                         document.getElementById('jsonOutput').innerHTML = "<div class='bg-red-100 text-red-700 p-3 rounded-lg'>Terjadi kesalahan saat mengambil data.</div>";
                     });
-                };
-            }, "image/jpeg");
-        }
+                }, "image/jpeg");
+            }
+
     </script>
 </body>
 </html>
