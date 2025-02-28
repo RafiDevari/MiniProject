@@ -67,7 +67,7 @@
                 reader.readAsDataURL(blob);
                 reader.onloadend = function() {
                     const base64data = reader.result.split(',')[1];
-                    fetch("", {
+                    fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=Api_KEY", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -75,9 +75,9 @@
                         body: JSON.stringify({
                             "contents": [{
                                 "parts": [
-                                    {"text": "buatlah penjelasan dan saran berdasarkan ini"},
+                                    {"text": "Berdasarkan gambar ini, berikan informasi kandungan gizinya dalam format JSON sebagai berikut,Berikan saran dalam saat makan makanan kemasan ini seperti seberapa sehat makanan ini dan lain lain. BERIKAN HANYA JSONNYA:\n{\n\"kalori\": \" \",\n\"lemak_total\": \" \",\n\"lemak_jenuh\": \" \",\n\"kolesterol\": \" \",\n\"protein\": \" \",\n\"karbohidrat\": \" \",\n\"gula\": \" \",\n\"garam\": \" \",\n\"saran\": \" \"}" },
                                     {"inline_data": {
-                                        "mime_type": "image/jpeg",
+                                        "mime_type": "image/jpeg",  
                                         "data": base64data
                                     }}
                                 ]
