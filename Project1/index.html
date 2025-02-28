@@ -5,18 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cek Kandungan Gizi</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
-<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen">
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen my-20 mx-8">
+
+
+
+
+
+    
     <div class="text-center">
         <h1 class="text-4xl font-bold text-gray-800 mb-4">Cek Kandungan Gizi</h1>
         <p class="text-gray-600 mb-6">Ambil gambar makanan Anda dan dapatkan informasi kandungan gizinya.</p>
         <button id="openCameraButton" onclick="openCamera()" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">Buka Kamera</button>
     </div>
 
-    <div class="mt-6" id="cameraContainer" style="display: none;">
+    <div class="mt-6 flex flex-col items-center" id="cameraContainer" style="display: none;">
         <video id="camera" autoplay class="border rounded-lg shadow-md"></video>
-        <button onclick="captureImage()" class="mt-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition">Ambil Gambar</button>
+        <div class="flex justify-center">
+            <button onclick="captureImage()" class="mt-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition">
+                Ambil Gambar
+            </button>
+        </div>
     </div>
+
 
     <canvas id="canvas" style="display: none;"></canvas>
     <div id="previewContainer" class="mt-6 text-center" style="display: none;">
@@ -29,6 +42,16 @@
 
     <!-- Tempat menampilkan hasil -->
     <div id="jsonOutput" class="mt-6 text-center max-w-md" style="display: none;"></div>
+
+
+
+
+
+
+
+
+
+
 
     <script>
         function openCamera() {
@@ -76,6 +99,9 @@
                             // Menampilkan hasil dengan desain
                             const output = `
                                 <div class="bg-white shadow-md rounded-lg p-4">
+                                    <div class="my-4 p-3 rounded-lg ${data.saran ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'}">
+                                        <strong>Saran:</strong> ${data.saran ? data.saran : "Masukkan gambar yang benar"}
+                                    </div>
                                     <h2 class="text-xl font-bold mb-2">Hasil Kandungan Gizi</h2>
                                     <p><strong>Kalori:</strong> ${data.kalori}</p>
                                     <p><strong>Lemak Total:</strong> ${data.lemak_total}</p>
@@ -85,9 +111,6 @@
                                     <p><strong>Karbohidrat:</strong> ${data.karbohidrat}</p>
                                     <p><strong>Gula:</strong> ${data.gula}</p>
                                     <p><strong>Garam:</strong> ${data.garam}</p>
-                                    <div class="mt-4 p-3 rounded-lg ${data.saran ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'}">
-                                        <strong>Saran:</strong> ${data.saran ? data.saran : "Masukkan gambar yang benar"}
-                                    </div>
                                 </div>
                             `;
                             
