@@ -19,14 +19,17 @@
 
 
     
-    <!-- <div class="text-center">
-        <h1 class="text-4xl font-bold text-gray-800 mb-4">Cek Kandungan Gizi</h1>
-        <p class="text-gray-600 mb-6">Ambil gambar makanan Anda dan dapatkan informasi kandungan gizinya.</p>
+    <div class="text-center flex flex-col items-center justify-center mt-16 gap-4">
+        <h1 class="text-4xl font-bold text-gray-800">Cek Kandungan Gizi</h1>
+        <p class="text-gray-600">Ambil gambar makanan Anda dan dapatkan informasi kandungan gizinya.</p>
+        <img id="tutor" class="md:w-1/4" src="images/tutorial.png" alt="">
         <button id="openCameraButton" onclick="openCamera()" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">Buka Kamera</button>
     </div>
 
-    <div class="mt-6 flex flex-col items-center" id="cameraContainer" style="display: none;">
-        <video id="camera" autoplay class="border rounded-lg shadow-md"></video>
+    <div class="mt-6 flex flex-col items-center justify-center" id="cameraContainer" style="display: none;">
+        <div class="flex justify-center">
+            <video id="camera" autoplay class="w-full md:w-auto border rounded-lg shadow-md"></video>
+        </div>
         <div class="flex justify-center">
             <button onclick="captureImage()" class="mt-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition">
                 Ambil Gambar
@@ -36,16 +39,17 @@
 
 
     <canvas id="canvas" style="display: none;"></canvas>
-    <div id="previewContainer" class="mt-6 text-center" style="display: none;">
-        <img id="previewImage" class="border rounded-lg shadow-md max-w-xs" />
+    <div id="previewContainer" class="mt-6 text-center " style="display: none;">
+        <div class="flex justify-center">   
+            <img id="previewImage" class="border rounded-lg shadow-md max-w-full" />
+        </div>
         <div class="mt-4">
             <button onclick="retakeImage()" class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-600 transition">Ambil Ulang</button>
             <button onclick="uploadImage()" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition">Kirim Gambar</button>
         </div>
     </div>
 
-    <-- Tempat menampilkan hasil -->
-    <!-- <div id="jsonOutput" class="mt-6 text-center max-w-md" style="display: none;"></div>  -->
+    <div id="jsonOutput" class="mt-6 text-center max-w-md" style="display: none;"></div>  
 
 
 
@@ -61,6 +65,7 @@
             document.getElementById('cameraContainer').style.display = 'block';
             document.getElementById('previewContainer').style.display = 'none';
             document.getElementById('openCameraButton').style.display = 'none';
+            document.getElementById('tutor').style.display = 'none';
             const video = document.getElementById('camera');
             navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
                 .then(stream => { video.srcObject = stream; })
