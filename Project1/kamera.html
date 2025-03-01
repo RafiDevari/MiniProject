@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Kandungan Gizi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+    <nav class="bg-gray-800 p-4">
+        <div class="container mx-auto flex items-center">
+            <a href="#" class="text-white text-xl font-bold">MyLogo</a>
+        </div>
+    </nav>
+
+
+
+    
+    <!-- <div class="text-center">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Cek Kandungan Gizi</h1>
+        <p class="text-gray-600 mb-6">Ambil gambar makanan Anda dan dapatkan informasi kandungan gizinya.</p>
+        <button id="openCameraButton" onclick="openCamera()" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">Buka Kamera</button>
+    </div>
+
+    <div class="mt-6 flex flex-col items-center" id="cameraContainer" style="display: none;">
+        <video id="camera" autoplay class="border rounded-lg shadow-md"></video>
+        <div class="flex justify-center">
+            <button onclick="captureImage()" class="mt-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition">
+                Ambil Gambar
+            </button>
+        </div>
+    </div>
+
+
+    <canvas id="canvas" style="display: none;"></canvas>
+    <div id="previewContainer" class="mt-6 text-center" style="display: none;">
+        <img id="previewImage" class="border rounded-lg shadow-md max-w-xs" />
+        <div class="mt-4">
+            <button onclick="retakeImage()" class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-600 transition">Ambil Ulang</button>
+            <button onclick="uploadImage()" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition">Kirim Gambar</button>
+        </div>
+    </div>
+
+    <-- Tempat menampilkan hasil -->
+    <!-- <div id="jsonOutput" class="mt-6 text-center max-w-md" style="display: none;"></div>  -->
+
+
+
+
+
+
+
+
+
+
+    <script>
+        function openCamera() {
+            document.getElementById('cameraContainer').style.display = 'block';
+            document.getElementById('previewContainer').style.display = 'none';
+            document.getElementById('openCameraButton').style.display = 'none';
+            const video = document.getElementById('camera');
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                .then(stream => { video.srcObject = stream; })
+                .catch(error => console.error("Error accessing camera: ", error));
+        }
+
+        function captureImage() {
+            const video = document.getElementById('camera');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            const imageUrl = canvas.toDataURL("image/jpeg");
+            document.getElementById('previewImage').src = imageUrl;
+            document.getElementById('previewContainer').style.display = 'block';
+            document.getElementById('cameraContainer').style.display = 'none';
+        }
+
+        function retakeImage() {
+            document.getElementById('previewContainer').style.display = 'none';
+            openCamera();
+        }
+
+            function uploadImage() {
+                const canvas = document.getElementById('canvas');
+                canvas.toBlob(blob => {
+                    const formData = new FormData();
+                    formData.append("image", blob, "image.jpg");
+                    
+                    fetch("https://flask-api-vercel-test-eight.vercel.app/upload", {  
+                        method: "POST",
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        try {
+                            // Menampilkan hasil dengan desain
+                            const output = `
+                                <div class="bg-white shadow-md rounded-lg p-4">
+                                    <div class="my-4 p-3 rounded-lg ${data.saran ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'}">
+                                        <strong>Saran:</strong> ${data.saran ? data.saran : "Masukkan gambar yang benar"}
+                                    </div>
+                                    <h2 class="text-xl font-bold mb-2">Hasil Kandungan Gizi</h2>
+                                    <p><strong>Kalori:</strong> ${data.kalori}</p>
+                                    <p><strong>Lemak Total:</strong> ${data.lemak_total}</p>
+                                    <p><strong>Lemak Jenuh:</strong> ${data.lemak_jenuh}</p>
+                                    <p><strong>Kolesterol:</strong> ${data.kolesterol}</p>
+                                    <p><strong>Protein:</strong> ${data.protein}</p>
+                                    <p><strong>Karbohidrat:</strong> ${data.karbohidrat}</p>
+                                    <p><strong>Gula:</strong> ${data.gula}</p>
+                                    <p><strong>Garam:</strong> ${data.garam}</p>
+                                </div>
+                            `;
+                            
+                            document.getElementById('jsonOutput').style.display = 'block';
+                            document.getElementById('jsonOutput').innerHTML = output;
+                        } catch (error) {
+                            console.error("Parsing error:", error);
+                            document.getElementById('jsonOutput').style.display = 'block';
+                            document.getElementById('jsonOutput').innerHTML = "<div class='bg-red-100 text-red-700 p-3 rounded-lg'>Terjadi kesalahan saat memproses data.</div>";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        document.getElementById('jsonOutput').style.display = 'block';
+                        document.getElementById('jsonOutput').innerHTML = "<div class='bg-red-100 text-red-700 p-3 rounded-lg'>Terjadi kesalahan saat mengambil data.</div>";
+                    });
+                }, "image/jpeg");
+            }
+
+    </script>
+</body>
+</html>
