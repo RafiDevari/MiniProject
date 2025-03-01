@@ -7,23 +7,25 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="bg-gray-200">
-    <nav class="bg-gray-900 p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-white text-xl font-bold">NutriCheck</a>
+<body class="bg-gray-100">
+    
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full bg-gray-900 py-4 shadow-lg z-50">
+        <div class="container mx-auto px-8 flex justify-between items-center">
+            <a href="#" class="text-white text-2xl font-semibold">NutriCheck</a>
         </div>
     </nav>
     
-    <header class="relative bg-cover bg-center py-56 flex items-center justify-center" style="background-image: url('images/landing.jpg');">
-        <div class="absolute inset-0 bg-black opacity-80"></div>
-        <div class="relative text-center text-white flex flex-col gap-4 mx-8">
-            <h1 class="text-4xl font-bold">Selamat Datang NutriCheck</h1>
-            <p class="text-lg">Solusi untuk mengecek kandungan makanan</p>
-            <a href="kamera.html" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-700">Gunakan Sekarang</a>
+    <!-- Hero Section -->
+    <header class="relative flex items-center justify-center h-screen bg-cover bg-center" style="background-image: url('images/landing.jpg');">
+        <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+        <div class="relative z-10 text-center text-white px-6 md:px-12">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4">NutriCheck</h1>
+            <h2 class="text-3xl md:text-4xl font-semibold mb-6">Cek Kandungan Makananmu!</h2>
+            <p class="text-lg md:text-xl mb-6">Solusi cepat dan mudah untuk mengecek kandungan pada makanan kemasan.</p>
+            <a href="kamera.html" class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-medium shadow-md hover:bg-blue-700 transition-all">Gunakan Sekarang</a>
         </div>
-        
     </header>
-    
     
 </body>
 </html>
