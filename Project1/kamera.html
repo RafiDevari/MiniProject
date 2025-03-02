@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cek Kandungan Gizi</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen ">
@@ -49,21 +49,39 @@
         </div>
     </div>
 
-    <div id="jsonOutput" class="flex justify-center items-center my-8 text-center" style="display: one;">
-        <!-- <div class="bg-white shadow-md rounded-lg p-4 max-w-md">
-            <div class="my-4 p-3 rounded-lg ${data.saran ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'}">
-                <strong>Saran:</strong> ${data.saran ? data.saran : "Masukkan gambar yang benar"}
+    <div id="jsonOutput" class="flex flex-col justify-center items-center bg-red-500 my-8 text-center" style="display: one;">
+
+
+        <div class="bg-blue-500 md:w-1/4 flex flex-col gap-6">
+            <div class="flex flex-col gap-4 bg-white p-5 shadow-md rounded-lg max-w-md max-w-md rounded-lg ${data.saran ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'}">
+                <div class="flex">
+                    <i class="bi bi-house text-red-500 text-2xl"></i>
+
+                    <strong>Saran:</strong> ${data.saran ? data.saran : "Masukkan gambar yang benar"}
+                </div>
+                <div>
+                    <strong>Saran:</strong> ${data.saran ? data.saran : "Masukkan gambar yang benar"}
+                </div>
+                <div>
+                    <strong>Saran:</strong> ${data.saran ? data.saran : "Masukkan gambar yang benar"}
+                </div>
             </div>
-            <h2 class="text-xl font-bold mb-2">Hasil Kandungan Gizi</h2>
-            <p><strong>Kalori:</strong> ${data.kalori}</p>
-            <p><strong>Lemak Total:</strong> ${data.lemak_total}</p>
-            <p><strong>Lemak Jenuh:</strong> ${data.lemak_jenuh}</p>
-            <p><strong>Kolesterol:</strong> ${data.kolesterol}</p>
-            <p><strong>Protein:</strong> ${data.protein}</p>
-            <p><strong>Karbohidrat:</strong> ${data.karbohidrat}</p>
-            <p><strong>Gula:</strong> ${data.gula}</p>
-            <p><strong>Garam:</strong> ${data.garam}</p>
-        </div> -->
+            <div class="bg-white shadow-md rounded-lg max-w-md">  
+                <h2 class="text-xl font-bold mb-2">Hasil Kandungan Gizi</h2>
+                <p><strong>Harian:</strong> ${data.saran_konsumsi_per_minggu}</p>
+                <p><strong>Rating:</strong> ${data.Rating}</p>
+                <p><strong>Kalori:</strong> ${data.kalori}</p>
+                <p><strong>Lemak Total:</strong> ${data.lemak_total}</p>
+                <p><strong>Lemak Jenuh:</strong> ${data.lemak_jenuh}</p>
+                <p><strong>Kolesterol:</strong> ${data.kolesterol}</p>
+                <p><strong>Protein:</strong> ${data.protein}</p>
+                <p><strong>Karbohidrat:</strong> ${data.karbohidrat}</p>
+                <p><strong>Gula:</strong> ${data.gula}</p>
+                <p><strong>Garam:</strong> ${data.garam}</p>
+            </div>
+        </div>
+
+
     </div>  
 
     
@@ -126,6 +144,8 @@
                                         <strong>Saran:</strong> ${data.saran ? data.saran : "Masukkan gambar yang benar"}
                                     </div>
                                     <h2 class="text-xl font-bold mb-2">Hasil Kandungan Gizi</h2>
+                                    <p><strong>Harian:</strong> ${data.saran_konsumsi_per_minggu}</p>
+                                    <p><strong>Rating:</strong> ${data.Rating}</p>
                                     <p><strong>Kalori:</strong> ${data.kalori}</p>
                                     <p><strong>Lemak Total:</strong> ${data.lemak_total}</p>
                                     <p><strong>Lemak Jenuh:</strong> ${data.lemak_jenuh}</p>
