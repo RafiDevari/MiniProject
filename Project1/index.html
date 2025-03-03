@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="flex flex-col min-h-screen">
-    <header class="px-4 lg:px-6 h-16 flex items-center">
+    <header class="px-4 lg:px-6 h-16 flex items-center shadow-sm">
       <a class="flex items-center justify-center" href="#">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-green-600">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
@@ -16,23 +16,9 @@
         </svg>
         <span class="ml-2 text-xl font-bold">NutriCheck</span>
       </a>
-      <nav class="ml-auto flex gap-4 sm:gap-6">
-        <a class="text-sm font-medium hover:underline underline-offset-4" href="#">
-          Beranda
-        </a>
-        <a class="text-sm font-medium hover:underline underline-offset-4" href="#">
-          Tentang
-        </a>
-        <a class="text-sm font-medium hover:underline underline-offset-4" href="#">
-          Fitur
-        </a>
-        <a class="text-sm font-medium hover:underline underline-offset-4" href="#">
-          Kontak
-        </a>
-      </nav>
     </header>
     <main class="flex-1">
-      <section class="w-full py-12 md:py-24 lg:py-32 xl:py-48">
+      <section class="w-full py-12 md:py-24 lg:py-32">
         <div class="container px-4 md:px-6 mx-auto">
           <div class="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-2">
             <div class="flex flex-col justify-center space-y-4">
@@ -48,13 +34,13 @@
                 </p>
               </div>
               <div class="flex flex-col gap-2 min-[400px]:flex-row">
-                <button class="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg rounded-md inline-flex items-center">
+                <a href="kamera.html" class="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg rounded-md inline-flex items-center">
                   Gunakan Sekarang
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-5 w-5">
                     <path d="M5 12h14"></path>
                     <path d="m12 5 7 7-7 7"></path>
                   </svg>
-                </button>
+                </a>
               </div>
               <div class="flex items-center gap-4 mt-6">
                 <div class="flex items-center gap-1">
@@ -105,7 +91,7 @@
                 Bagaimana NutriCheck Bekerja?
               </h2>
               <p class="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-                Cukup scan barcode atau foto kemasan makanan, dan dapatkan informasi lengkap tentang kandungan nutrisinya.
+                Cukup scan Info nutrisi kemasan makanan, dan dapatkan informasi lengkap serta saran tentang kandungan nutrisinya.
               </p>
             </div>
           </div>
@@ -125,7 +111,7 @@
               </div>
               <h3 class="text-xl font-bold">Proses Analisis</h3>
               <p class="text-gray-500 dark:text-gray-400">
-                Sistem kami akan menganalisis kandungan nutrisi berdasarkan database yang komprehensif.
+                Sistem akan menganalisis kandungan nutrisi yang diberikan oleh user.
               </p>
             </div>
             <div class="flex flex-col justify-center space-y-4 rounded-lg border border-green-200 bg-white p-6 shadow-sm">
@@ -134,7 +120,7 @@
               </div>
               <h3 class="text-xl font-bold">Lihat Hasil</h3>
               <p class="text-gray-500 dark:text-gray-400">
-                Dapatkan informasi lengkap tentang kandungan nutrisi, bahan tambahan, dan rekomendasi kesehatan.
+                Dapatkan informasi lengkap tentang kandungan nutrisi dan rekomendasi kesehatan.
               </p>
             </div>
           </div>
@@ -152,13 +138,13 @@
               </p>
             </div>
             <div class="flex flex-col gap-2 min-[400px]:flex-row">
-              <button class="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg rounded-md inline-flex items-center">
+              <a href="kamera.html" class="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg rounded-md inline-flex items-center">
                 Gunakan Sekarang
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2 h-5 w-5">
                   <path d="M5 12h14"></path>
                   <path d="m12 5 7 7-7 7"></path>
                 </svg>
-              </button>
+              </a>
             </div>
           </div>
         </div>
