@@ -3,96 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cek Kandungan Gizi</title>
+    <title>NutriCheck - Cek Kandungan Makananmu!</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        green: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-gray-100 flex flex-col min-h-screen ">
-
-    <nav class="bg-gray-800 p-4">
-        <div class="container mx-auto flex items-center">
-            <a href="#" class="text-white text-xl font-bold">NutriCheck</a>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex items-center">
+            <a href="#" class="text-green-600 text-xl font-bold flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 mr-2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path>
+                    <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                NutriCheck
+            </a>
         </div>
-    </nav>
+    </header>
 
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center text-green-600 mb-4">Cek Kandungan Makananmu!</h1>
+        <p class="text-center text-gray-600 mb-8">Solusi cepat dan mudah untuk mengecek kandungan pada makanan kemasan.</p>
 
-    <div class="mt-6 flex flex-col items-center justify-center" id="cameraContainer" style="display: none;">
-        <div class="flex justify-center">
-            <video id="camera" autoplay class="w-full md:w-auto border rounded-lg shadow-md"></video>
-        </div>
-        <div class="flex flex-col items-center justify-center mx-8">
-            <button onclick="captureImage()" class="w-fit mt-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition">
-                Ambil Gambar
-            </button>
-        </div>
-    </div>
+        <div class="max-w-3xl mx-auto">
+            <div id="tutor" class="text-center flex flex-col items-center justify-center gap-4 mb-8">
+                <p class="text-gray-600">Ambil gambar informasi gizi makanan Anda</p>
+                <img class="w-full max-w-md rounded-lg shadow-md" src="images/tutorial.png" alt="Tutorial">
+                <button id="openCameraButton" onclick="openCamera()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-md transition">
+                    Buka Kamera
+                </button>
+            </div>
 
-    
-    <div id="tutor"  class="text-center flex flex-col items-center justify-center mt-16 gap-4">
-        <p class="text-gray-600">Ambil gambar informasi gizi makanan Anda</p>
-        <img class="md:w-1/4" src="images/tutorial.png" alt="">
-        <button id="openCameraButton" onclick="openCamera()" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">Buka Kamera</button>
-    </div>
-
-    
-
-
-    <canvas id="canvas" style="display: none;"></canvas>
-    <div id="previewContainer" class="mt-6 text-center " style="display: none;">
-        <div class="flex justify-center">   
-            <img id="previewImage" class="border rounded-lg shadow-md max-w-full" />
-        </div>
-        <div class="mt-4">
-            <button onclick="retakeImage()" class="bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-yellow-600 transition">Ambil Ulang</button>
-            <button onclick="uploadImage()" class="bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition">Kirim Gambar</button>
-        </div>
-    </div>
-
-    <div id="jsonOutput" class="bg-red-500 flex flex-col justify-center items-center my-8 text-center" style="display: one;">
-
-
-        <!-- <div class="bg-blue-300 md:w-2/5 flex flex-col gap-6">
-            <div class="flex flex-col gap-4 bg-white p-5 shadow-md rounded-lg ${data.saran ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'}">
-                <div class="flex gap-2">
-                        <i class="bi bi-info-circle"></i>
-                        <strong class="font-bold">Rating Kesehatan : ${data.Rating ? data.Rating : "Masukkan gambar yang benar"}</strong> 
+            <div class="mt-6 flex flex-col items-center justify-center" id="cameraContainer" style="display: none;">
+                <div class="w-full max-w-md">
+                    <video id="camera" autoplay class="w-full border rounded-lg shadow-md"></video>
                 </div>
+                <button onclick="captureImage()" class="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-md transition">
+                    Ambil Gambar
+                </button>
+            </div>
 
-                <div class="text-start font-semibold text-black">
-                    ${data.saran ? data.saran : "Masukkan gambar yang benar"}
+            <canvas id="canvas" style="display: none;"></canvas>
+
+            <div id="previewContainer" class="mt-6 text-center" style="display: none;">
+                <div class="flex justify-center">   
+                    <img id="previewImage" class="border rounded-lg shadow-md max-w-full" />
                 </div>
-                <div class="text-start text-sm text-gray-500">
-                    Saran Konsumsi : ${data.saran_konsumsi_per_minggu ? data.saran_konsumsi_per_minggu : "Masukkan gambar yang benar"}
+                <div class="mt-4 space-x-4">
+                    <button onclick="retakeImage()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg shadow-md transition">Ambil Ulang</button>
+                    <button onclick="uploadImage()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow-md transition">Kirim Gambar</button>
                 </div>
             </div>
 
-            <div class="bg-white shadow-md rounded-lg">  
-                <h2 class="text-xl font-bold mb-2">Hasil Kandungan Gizi</h2>
-                <p><strong>Harian:</strong> ${data.saran_konsumsi_per_minggu}</p>
-                <p><strong>Rating:</strong> ${data.Rating}</p>
-                <p><strong>Kalori:</strong> ${data.kalori}</p>
-                <p><strong>Lemak Total:</strong> ${data.lemak_total}</p>
-                <p><strong>Lemak Jenuh:</strong> ${data.lemak_jenuh}</p>
-                <p><strong>Kolesterol:</strong> ${data.kolesterol}</p>
-                <p><strong>Protein:</strong> ${data.protein}</p>
-                <p><strong>Karbohidrat:</strong> ${data.karbohidrat}</p>
-                <p><strong>Gula:</strong> ${data.gula}</p>
-                <p><strong>Garam:</strong> ${data.garam}</p>
+            <div id="jsonOutput" class="mt-8 flex flex-col items-center" style="display: none;">
+                <!-- <div class="bg-blue-300 md:w-2/5 flex flex-col gap-6">
+                        <div class="flex flex-col gap-4 bg-white p-5 shadow-md rounded-lg ${data.saran ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'}">
+                            <div class="flex gap-2">
+                                    <i class="bi bi-info-circle"></i>
+                                    <strong class="font-bold">Rating Kesehatan : ${data.Rating ? data.Rating : "Masukkan gambar yang benar"}</strong> 
+                            </div>
+
+                            <div class="text-start font-semibold text-black">
+                                ${data.saran ? data.saran : "Masukkan gambar yang benar"}
+                            </div>
+                            <div class="text-start text-sm text-gray-500">
+                                Saran Konsumsi : ${data.saran_konsumsi_per_minggu ? data.saran_konsumsi_per_minggu : "Masukkan gambar yang benar"}
+                            </div>
+                        </div>
+
+                        <div class="bg-white shadow-md rounded-lg">  
+                            <h2 class="text-xl font-bold mb-2">Hasil Kandungan Gizi</h2>
+                            <p><strong>Harian:</strong> ${data.saran_konsumsi_per_minggu}</p>
+                            <p><strong>Rating:</strong> ${data.Rating}</p>
+                            <p><strong>Kalori:</strong> ${data.kalori}</p>
+                            <p><strong>Lemak Total:</strong> ${data.lemak_total}</p>
+                            <p><strong>Lemak Jenuh:</strong> ${data.lemak_jenuh}</p>
+                            <p><strong>Kolesterol:</strong> ${data.kolesterol}</p>
+                            <p><strong>Protein:</strong> ${data.protein}</p>
+                            <p><strong>Karbohidrat:</strong> ${data.karbohidrat}</p>
+                            <p><strong>Gula:</strong> ${data.gula}</p>
+                            <p><strong>Garam:</strong> ${data.garam}</p>
+                        </div>
+                    </div> -->
             </div>
-        </div> -->
+        </div>
+    </main>
 
-
-    </div>  
-
-    
-
-
-
-
-
-
-
+    <footer class="bg-white border-t mt-12">
+        <div class="container mx-auto px-4 py-6 flex flex-col sm:flex-row justify-between items-center">
+            <p class="text-sm text-gray-500">© 2024 NutriCheck. Hak Cipta Dilindungi.</p>
+            <nav class="flex gap-4 mt-4 sm:mt-0">
+                <a class="text-sm text-gray-500 hover:text-green-600" href="#">Kebijakan Privasi</a>
+                <a class="text-sm text-gray-500 hover:text-green-600" href="#">Syarat & Ketentuan</a>
+            </nav>
+        </div>
+    </footer>
 
     <script>
         function openCamera() {
@@ -125,68 +147,60 @@
             openCamera();
         }
 
-            function uploadImage() {
-                const canvas = document.getElementById('canvas');
-                canvas.toBlob(blob => {
-                    const formData = new FormData();
-                    formData.append("image", blob, "image.jpg");
-                    
-                    fetch("https://flask-api-vercel-test-eight.vercel.app/upload", {  
-                        method: "POST",
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        try {
-                            // Menampilkan hasil dengan desain
-                            const output = `
-                                <div class="bg-blue-300 md:w-2/5 flex flex-col gap-6">
-                                    <div class="flex flex-col gap-4 bg-white p-5 shadow-md rounded-lg ${data.saran ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'}">
-                                        <div class="flex gap-2">
-                                                <i class="bi bi-info-circle"></i>
-                                                <strong class="font-bold">Rating Kesehatan : ${data.Rating ? data.Rating : "Masukkan gambar yang benar"}</strong> 
-                                        </div>
-
-                                        <div class="text-start font-semibold text-black">
-                                            ${data.saran ? data.saran : "Masukkan gambar yang benar"}
-                                        </div>
-                                        <div class="text-start text-sm text-gray-500">
-                                            Saran Konsumsi : ${data.saran_konsumsi_per_minggu ? data.saran_konsumsi_per_minggu : "Masukkan gambar yang benar"}
-                                        </div>
+        function uploadImage() {
+            const canvas = document.getElementById('canvas');
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append("image", blob, "image.jpg");
+                
+                fetch("https://flask-api-vercel-test-eight.vercel.app/upload", {  
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    try {
+                        const output = `
+                            <div class="bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-2xl">
+                                <div class="p-6 ${data.saran ? 'bg-green-100' : 'bg-red-100'}">
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <i class="bi ${data.saran ? 'bi-check-circle text-green-600' : 'bi-exclamation-circle text-red-600'}"></i>
+                                        <strong class="font-bold text-lg">Rating Kesehatan: ${data.Rating || "Tidak tersedia"}</strong> 
                                     </div>
-
-                                    <div class="bg-white shadow-md rounded-lg">  
-                                        <h2 class="text-xl font-bold mb-2">Hasil Kandungan Gizi</h2>
-                                        <p><strong>Harian:</strong> ${data.saran_konsumsi_per_minggu}</p>
-                                        <p><strong>Rating:</strong> ${data.Rating}</p>
-                                        <p><strong>Kalori:</strong> ${data.kalori}</p>
-                                        <p><strong>Lemak Total:</strong> ${data.lemak_total}</p>
-                                        <p><strong>Lemak Jenuh:</strong> ${data.lemak_jenuh}</p>
-                                        <p><strong>Kolesterol:</strong> ${data.kolesterol}</p>
-                                        <p><strong>Protein:</strong> ${data.protein}</p>
-                                        <p><strong>Karbohidrat:</strong> ${data.karbohidrat}</p>
-                                        <p><strong>Gula:</strong> ${data.gula}</p>
-                                        <p><strong>Garam:</strong> ${data.garam}</p>
+                                    <p class="text-gray-700 mb-2">${data.saran || "Masukkan gambar yang benar"}</p>
+                                    <p class="text-sm text-gray-600">Saran Konsumsi: ${data.saran_konsumsi_per_minggu+" Per minggu" || "Tidak tersedia"}</p>
+                                </div>
+                                <div class="p-6">  
+                                    <h2 class="text-xl font-bold mb-4 text-green-600">Hasil Kandungan Gizi</h2>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div><strong>Kalori:</strong> ${data.kalori || "N/A"}</div>
+                                        <div><strong>Lemak Total:</strong> ${data.lemak_total || "N/A"}</div>
+                                        <div><strong>Lemak Jenuh:</strong> ${data.lemak_jenuh || "N/A"}</div>
+                                        <div><strong>Kolesterol:</strong> ${data.kolesterol || "N/A"}</div>
+                                        <div><strong>Protein:</strong> ${data.protein || "N/A"}</div>
+                                        <div><strong>Karbohidrat:</strong> ${data.karbohidrat || "N/A"}</div>
+                                        <div><strong>Gula:</strong> ${data.gula || "N/A"}</div>
+                                        <div><strong>Garam:</strong> ${data.garam || "N/A"}</div>
                                     </div>
                                 </div>
-                            `;
-                            
-                            document.getElementById('jsonOutput').style.display = 'flex';
-                            document.getElementById('jsonOutput').innerHTML = output;
-                        } catch (error) {
-                            console.error("Parsing error:", error);
-                            document.getElementById('jsonOutput').style.display = 'block';
-                            document.getElementById('jsonOutput').innerHTML = "<div class='bg-red-100 text-red-700 p-3 rounded-lg'>Terjadi kesalahan saat memproses data.</div>";
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                        document.getElementById('jsonOutput').style.display = 'block';
-                        document.getElementById('jsonOutput').innerHTML = "<div class='bg-red-100 text-red-700 p-3 rounded-lg'>Terjadi kesalahan saat mengambil data.</div>";
-                    });
-                }, "image/jpeg");
-            }
-
+                            </div>
+                        `;
+                        
+                        document.getElementById('jsonOutput').style.display = 'flex';
+                        document.getElementById('jsonOutput').innerHTML = output;
+                    } catch (error) {
+                        console.error("Parsing error:", error);
+                        document.getElementById('jsonOutput').style.display = 'flex';
+                        document.getElementById('jsonOutput').innerHTML = "<div class='bg-red-100 text-red-700 p-4 rounded-lg'>Terjadi kesalahan saat memproses data.</div>";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    document.getElementById('jsonOutput').style.display = 'flex';
+                    document.getElementById('jsonOutput').innerHTML = "<div class='bg-red-100 text-red-700 p-4 rounded-lg'>Terjadi kesalahan saat mengambil data.</div>";
+                });
+            }, "image/jpeg");
+        }
     </script>
 </body>
 </html>
