@@ -75,35 +75,7 @@
             </div>
 
             <div id="jsonOutput" class="mt-8 flex flex-col items-center" style="display: none;">
-                <!-- <div class="bg-blue-300 md:w-2/5 flex flex-col gap-6">
-                        <div class="flex flex-col gap-4 bg-white p-5 shadow-md rounded-lg ${data.saran ? 'bg-blue-100 text-blue-700' : 'bg-red-100 text-red-700'}">
-                            <div class="flex gap-2">
-                                    <i class="bi bi-info-circle"></i>
-                                    <strong class="font-bold">Rating Kesehatan : ${data.Rating ? data.Rating : "Masukkan gambar yang benar"}</strong> 
-                            </div>
-
-                            <div class="text-start font-semibold text-black">
-                                ${data.saran ? data.saran : "Masukkan gambar yang benar"}
-                            </div>
-                            <div class="text-start text-sm text-gray-500">
-                                Saran Konsumsi : ${data.saran_konsumsi_per_minggu ? data.saran_konsumsi_per_minggu : "Masukkan gambar yang benar"}
-                            </div>
-                        </div>
-
-                        <div class="bg-white shadow-md rounded-lg">  
-                            <h2 class="text-xl font-bold mb-2">Hasil Kandungan Gizi</h2>
-                            <p><strong>Harian:</strong> ${data.saran_konsumsi_per_minggu}</p>
-                            <p><strong>Rating:</strong> ${data.Rating}</p>
-                            <p><strong>Kalori:</strong> ${data.kalori}</p>
-                            <p><strong>Lemak Total:</strong> ${data.lemak_total}</p>
-                            <p><strong>Lemak Jenuh:</strong> ${data.lemak_jenuh}</p>
-                            <p><strong>Kolesterol:</strong> ${data.kolesterol}</p>
-                            <p><strong>Protein:</strong> ${data.protein}</p>
-                            <p><strong>Karbohidrat:</strong> ${data.karbohidrat}</p>
-                            <p><strong>Gula:</strong> ${data.gula}</p>
-                            <p><strong>Garam:</strong> ${data.garam}</p>
-                        </div>
-                    </div> -->
+                
             </div>
         </div>
     </main>
@@ -150,6 +122,12 @@
         }
 
         function uploadImage() {
+            document.getElementById('jsonOutput').style.display = 'flex';
+            document.getElementById('jsonOutput').innerHTML = `
+                <div class="flex justify-center items-center w-full h-20">
+                    <div class="animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500"></div>
+                </div>
+            `;
             const canvas = document.getElementById('canvas');
             canvas.toBlob(blob => {
                 const formData = new FormData();
